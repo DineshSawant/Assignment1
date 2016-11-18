@@ -1,0 +1,15 @@
+{
+    "success": true,
+    "total": 9,
+    "users": [
+        { fName: 'Lisa', lName: 'Joy', email: 'lisa@gmail.com', phone: '555-111-1224', birthDate: '20/09/1988' },
+        { fName: 'Bart', lName: 'Gim', email: 'bart@gmail.com', phone: '555-222-1234', birthDate: '20/09/1988' },
+        { fName: 'Homer', lName: 'Cri', email: 'home@gmail.com', phone: '555-222-1244', birthDate: '20/09/1988' },
+        { fName: 'Marge', lName: 'Winy', email: 'marge@gmail.com', phone: '555-222-1254', birthDate: '20/09/1988' },
+        { fName: 'Sachin', lName: 'Khedkar', email: 'sachin@gmail.com', phone: '555-222-1244', birthDate: '20/09/1988' },
+        { fName: 'Rohit', lName: 'Patil', email: 'rohit@gmail.com', phone: '555-222-1244', birthDate: '20/09/1988' },
+        { fName: 'Jay', lName: 'Mishra', email: 'jsy@gmail.com', phone: '555-222-1244', birthDate: '20/09/1988' },
+        { fName: 'DS', lName: 'Mulani', email: 'ds@gmail.com', phone: '555-222-1244', birthDate: '20/09/1988' },
+        { fName: 'KD', lName: 'Deshmukh', email: 'kd@gmail.com', phone: '555-222-1244', birthDate: '20/09/1988' },
+    ]
+}
