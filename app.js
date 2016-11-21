@@ -31,6 +31,16 @@ var countries = Ext.create('Ext.data.Store', {
 	]
 });
 
+// States store
+var states = Ext.create('Ext.data.Store', {
+	fields: ['abbr', 'name'],
+	data: [
+		{"abbr":"MH", "name":"Maharashtra"},
+        {"abbr":"GJ", "name": "Gujrat"},
+        {"abbr":"MP", "name":"Madhya Pradesh"}
+	]
+});
+
 Ext.application({
 	name: 'Assignment 1',
 	launch: function() {
@@ -72,132 +82,162 @@ var menuBar = Ext.create('Ext.container.Container', {
 	]
 });
 
+var userInfo1 = Ext.create('Ext.container.Container', {
+    layout: 'hbox',
+    margin: '0 0 15 0',
+    defaultType: 'textfield',
+    items: [
+		{
+            name: 'firstName',
+            fieldLabel: 'First Name',
+            emptyText: 'First Name',
+            allowBlank: false,
+            height: 30,
+        }, 
+        {
+            name: 'lastName',
+            fieldLabel: 'Last Name',
+            margins: '0 0 0 6',
+            emptyText: 'Last Name',
+            allowBlank: false,
+            height: 30,
+        },
+        {
+            fieldLabel: 'Email Address',
+            name: 'email',
+            vtype: 'email',
+            allowBlank: false,
+            height: 30,
+            margins: '0 0 0 6',
+            value: 'abc@gmail.com'
+        },
+        {
+            fieldLabel: 'Phone Number',
+            name: 'phone',
+            height: 30,
+            margins: '0 0 0 6',
+            emptyText: 'xxx-xxx-xxxx',
+            maskRe: /[\d\-]/,
+            regex: /^\d{3}-\d{3}-\d{4}$/,
+            regexText: 'Must be in the format xxx-xxx-xxxx'
+        }
+    ]
+});
+
+var userInfo2 = Ext.create('Ext.container.Container', {
+    layout: 'hbox',
+    defaultType: 'textfield',
+    margin: '0 0 5 0',
+    items: [
+        {
+            xtype: 'radiogroup',
+            width: 230,
+            fieldLabel: 'Gender',
+            items: [
+                {boxLabel: 'Male', name: 'gender', inputValue: 1},
+                {boxLabel: 'Female', name: 'gender', inputValue: 2}
+            ]
+        },
+        {
+	        xtype: 'datefield',
+	        fieldLabel: 'Birth Date',
+	        name: 'date',
+	        format: 'm/d/Y',
+	        margin: '0 0 0 27',
+	    },
+        {
+	        xtype: 'numberfield',
+	        name: 'exp',
+	        margin: '0 0 0 6',
+	        fieldLabel: 'Total Experience',
+	        minValue: 0,
+	       	maxValue: 20,
+	    },	
+	    {
+			xtype: 'combobox',
+			fieldLabel: 'Designation',
+			id: 'dsgnCombo',
+			editable: false,
+			forceSelection: true,
+			displayField: 'name'
+		},				                    
+        {
+        	xtype: 'button',
+        	text: 'Search',
+        	margins: '0 0 0 6',
+        	width: 100,
+			// height: 30,
+			listeners: {
+				click: function() {
+					var form = this.up('form').getForm();
+			        if (form.isValid()) {
+			        	userStore.proxy.url = 'data/users.json?'+form.getValues(true);
+			            userStore.load();
+			        } else {
+                        Ext.Msg.alert('Invalid Data', 'Please correct form errors.');
+                    }
+				}
+			}
+        }
+    ]
+});
+
+var addressDetails = Ext.create('Ext.container.Container', {
+    layout: 'hbox',
+    margin: '0 0 15 0',
+    defaultType: 'textfield',
+    items: [
+		{
+			xtype: 'combobox',
+			fieldLabel: 'Country',
+			id: 'countryCombo',
+			editable: false,
+			forceSelection: true,
+			store: countries,
+			displayField: 'name',
+			listeners: {
+				select: function(combo, record) {
+					var country = this.up('form').down('combobox');
+					console.log(record);
+					addressDetails.down('#statesCombo').store.loadData([{"abbr":"MH", "name":"Maharashtra"}]);
+				}
+			}
+		},
+		{
+			xtype: 'combobox',
+			fieldLabel: 'State',
+			id: 'statesCombo',
+			margin: '0 0 0 6',
+			editable: false,
+			forceSelection: true,
+			store: states,
+			displayField: 'name'
+		}
+    ]
+});
+
 var searchForm = Ext.create('Ext.form.Panel', {
 	title: 'Search Criteria',
 	bodyPadding: 10,
 	defaultType: 'textfield',
 	region: 'center',
-	layout: 'fit',
     items: [
     	{
         	xtype: 'fieldset',
             title: 'User Information',
-            items: [
-            	{
-                    xtype: 'fieldcontainer',
-                    layout: 'hbox',
-                    margin: '0 0 15 0',
-                    defaultType: 'textfield',
-                    items: [
-                		{
-	                        name: 'firstName',
-	                        fieldLabel: 'First Name',
-	                        emptyText: 'First Name',
-	                        allowBlank: false,
-	                        height: 30,
-	                    }, 
-	                    {
-	                        name: 'lastName',
-	                        fieldLabel: 'Last Name',
-	                        margins: '0 0 0 6',
-	                        emptyText: 'Last Name',
-	                        allowBlank: false,
-	                        height: 30,
-	                    },
-	                    {
-	                        fieldLabel: 'Email Address',
-	                        name: 'email',
-	                        vtype: 'email',
-	                        allowBlank: false,
-	                        height: 30,
-	                        margins: '0 0 0 6',
-	                        value: 'abc@gmail.com'
-	                    },
-	                    {
-	                        fieldLabel: 'Phone Number',
-	                        name: 'phone',
-	                        height: 30,
-	                        margins: '0 0 0 6',
-	                        emptyText: 'xxx-xxx-xxxx',
-	                        maskRe: /[\d\-]/,
-	                        regex: /^\d{3}-\d{3}-\d{4}$/,
-	                        regexText: 'Must be in the format xxx-xxx-xxxx'
-	                    }
-		            ]
-                },
-                {
-                    xtype: 'container',
-                    layout: 'hbox',
-                    defaultType: 'textfield',
-                    margin: '0 0 5 0',
-                    items: [
-	                    {
-				            xtype: 'radiogroup',
-				            width: 230,
-				            fieldLabel: 'Gender',
-				            items: [
-				                {boxLabel: 'Male', name: 'gender', inputValue: 1},
-				                {boxLabel: 'Female', name: 'gender', inputValue: 2}
-				            ]
-				        },
-				        {
-					        xtype: 'datefield',
-					        fieldLabel: 'Birth Date',
-					        name: 'date',
-					        format: 'm/d/Y',
-					        margin: '0 0 0 27',
-					    },
-				        {
-					        xtype: 'numberfield',
-					        name: 'exp',
-					        margin: '0 0 0 6',
-					        fieldLabel: 'Total Experience',
-					        minValue: 0,
-					       	maxValue: 20,
-					    },
-	                    {
-							xtype: 'combobox',
-							fieldLabel: 'Country',
-							id: 'countryCombo',
-							margin: '0 0 0 6',
-							editable: false,
-							forceSelection: true,
-							store: countries,
-							displayField: 'name',
-							listeners: {
-								'select': function(combo, record) {
-									var country = this.up('form').down('combobox');
-								}
-							}
-						},					                    
-	                    {
-	                    	xtype: 'button',
-	                    	text: 'Search',
-	                    	margins: '0 0 0 6',
-	                    	width: 100,
-							// height: 30,
-							listeners: {
-								click: function() {
-									var form = this.up('form').getForm();
-							        if (form.isValid()) {
-							        	userStore.proxy.url = 'data/users.json?'+form.getValues(true);
-							            userStore.load();
-							        } else {
-				                        Ext.Msg.alert('Invalid Data', 'Please correct form errors.');
-				                    }
-								}
-							}
-	                    }
-                    ]
-                }
-            ]
+            items: [userInfo1, userInfo2]
+        },
+        {
+        	xtype: 'fieldset',
+            title: 'Address Details',
+            items: [addressDetails]
         }
 	],
 });
 
 var grid = Ext.create('Ext.grid.Panel', {
 	store: userStore,
-	height: 465,
+	height: 410,
 	title: 'Search Result',
 	region: 'south',
 	columns: [
