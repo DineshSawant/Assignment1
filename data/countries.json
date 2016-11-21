@@ -1,0 +1,20 @@
+{
+	countries: [
+		{"name": "Afghanistan", "code": "AF"},
+		// {"name": "Åland Islands", "code": "AX"},
+		// {"name": "Albania", "code": "AL"},
+		// {"name": "Algeria", "code": "DZ"},
+		{"name": "Bangladesh", "code": "BD"},
+		// {"name": "Barbados", "code": "BB"},
+		// {"name": "Belarus", "code": "BY"},
+		// {"name": "Belgium", "code": "BE"},
+		// {"name": "Canada", "code": "CA"},
+		// {"name": "Cape Verde", "code": "CV"},
+		// {"name": "Cayman Islands", "code": "KY"},
+		// {"name": "Central African Republic", "code": "CF"},
+		// {"name": "Iceland", "code": "IS"},
+		{"name": "India", "code": "IN"},
+		// {"name": "Indonesia", "code": "ID"},
+		// {"name": "Iran, Islamic Republic Of", "code": "IR"},
+	]
+}

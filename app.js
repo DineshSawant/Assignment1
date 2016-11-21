@@ -22,23 +22,31 @@ var userStore = Ext.create('Ext.data.Store', {
 });
 
 // Country store
-var countries = Ext.create('Ext.data.Store', {
-	fields: ['abbr', 'name'],
-	data: [
-		{"abbr":"IND", "name":"India"},
-        {"abbr":"AM", "name":"America"},
-        {"abbr":"FR", "name":"France"}
-	]
+var countries =	 Ext.create('Ext.data.Store', {
+	fields: ['code', 'name'],
+	// autoLoad: true,
+	// mode: 'local',
+	proxy: {
+        type: 'ajax',
+        url: 'data/countries.json',
+        reader: {
+            type: 'json',
+            root: 'countries'
+        }
+    }
 });
 
 // States store
 var states = Ext.create('Ext.data.Store', {
-	fields: ['abbr', 'name'],
-	data: [
-		{"abbr":"MH", "name":"Maharashtra"},
-        {"abbr":"GJ", "name": "Gujrat"},
-        {"abbr":"MP", "name":"Madhya Pradesh"}
-	]
+	fields: ['countyId', 'abbr', 'name'],
+	proxy: {
+        type: 'ajax',
+        url: 'data/states.json',
+        reader: {
+            type: 'json',
+            root: 'states'
+        }
+    }
 });
 
 Ext.application({
@@ -195,11 +203,15 @@ var addressDetails = Ext.create('Ext.container.Container', {
 			forceSelection: true,
 			store: countries,
 			displayField: 'name',
+			valueField: 'code',
 			listeners: {
 				select: function(combo, record) {
-					var country = this.up('form').down('combobox');
-					console.log(record);
-					addressDetails.down('#statesCombo').store.loadData([{"abbr":"MH", "name":"Maharashtra"}]);
+					var country = this.up('form').down('#countryCombo');
+					states.clearFilter();
+					states.filter([{
+			        	property: 'countyId',
+			        	value: country.value
+			     	}]);
 				}
 			}
 		},

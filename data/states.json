@@ -1,0 +1,13 @@
+{
+	states: [
+        {"countyId": "AF", "abbr":"AF.KB", "name":"Kabul"},
+        {"countyId": "AF", "abbr":"AF.KD", "name": "Kandahar"},
+        {"countyId": "AF", "abbr":"AF.HR", "name":"Herat"},
+		{"countyId": "IN", "abbr":"MH", "name":"Maharashtra"},
+        {"countyId": "IN", "abbr":"GJ", "name": "Gujrat"},
+        {"countyId": "IN", "abbr":"MP", "name":"Madhya Pradesh"},
+        {"countyId": "BD", "abbr":"MH", "name":"BD State A"},
+        {"countyId": "BD", "abbr":"GJ", "name": "BD State B"},
+        {"countyId": "BD", "abbr":"MP", "name":"BD State C"}
+	]
+}
