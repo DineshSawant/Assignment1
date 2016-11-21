@@ -40,63 +40,14 @@ Ext.application({
 		    items: [
 		    	menuBar,
 		        searchForm,
-		        grid
+		        grid,
 		    ]
 		});
 	}
 });
 
-var grid = Ext.create('Ext.grid.Panel', {
-	store: userStore,
-	height: 200,
-	title: 'Search Result',
-	region: 'south',
-	columns: [
-        {
-            text: 'First Name',
-            flex: 1,
-            sortable: false,
-            hideable: false,
-            dataIndex: 'fName',
-        },
-        {
-            text: 'Last Name',
-            flex: 1,
-            sortable: false,
-            hideable: false,
-            dataIndex: 'lName',
-        },
-        {
-            text: 'Email Address',
-            flex: 1,
-            dataIndex: 'email',
-            hidden: false,
-            renderer: function(value) {
-                return Ext.String.format('<a href="">{1}</a>', value, value);
-            }
-        },
-        {
-            text: 'Phone Number',
-            flex: 1,
-            dataIndex: 'phone'
-        },
-        {
-            text: 'Birth Date',
-            flex: 1,
-            dataIndex: 'birthDate',
-        }
-    ],
-    dockedItems: [{
-        xtype: 'pagingtoolbar',
-        store: userStore,   // same store GridPanel is using
-        dock: 'bottom',
-        // displayInfo: true
-    }]
-});
-
 var menuBar = Ext.create('Ext.container.Container', {
-	layout: 'hbox',
-	// region: 'west',
+	region: 'north',
 	items: [
 		{
     		xtype: 'menu',
@@ -125,11 +76,8 @@ var searchForm = Ext.create('Ext.form.Panel', {
 	title: 'Search Criteria',
 	bodyPadding: 10,
 	defaultType: 'textfield',
-	region: 'south',
-	scrollFlags: {
-		x: true,
-		y: true
-	},
+	region: 'center',
+	layout: 'fit',
     items: [
     	{
         	xtype: 'fieldset',
@@ -245,4 +193,105 @@ var searchForm = Ext.create('Ext.form.Panel', {
             ]
         }
 	],
+});
+
+var grid = Ext.create('Ext.grid.Panel', {
+	store: userStore,
+	height: 465,
+	title: 'Search Result',
+	region: 'south',
+	columns: [
+        {
+            text: 'First Name',
+            flex: 1,
+            sortable: false,
+            hideable: false,
+            dataIndex: 'fName',
+        },
+        {
+            text: 'Last Name',
+            flex: 1,
+            sortable: false,
+            hideable: false,
+            dataIndex: 'lName',
+        },
+        {
+            text: 'Email Address',
+            flex: 1,
+            dataIndex: 'email',
+            hidden: false,
+            renderer: function(value) {
+                return Ext.String.format('<a href="#" onclick="grid.showModal()">{1}</a>', value, value);
+            }
+        },
+        {
+            text: 'Phone Number',
+            flex: 1,
+            dataIndex: 'phone'
+        },
+        {
+            text: 'Birth Date',
+            flex: 1,
+            dataIndex: 'birthDate',
+        }
+    ],
+    dockedItems: [{
+        xtype: 'pagingtoolbar',
+        store: userStore,   // same store GridPanel is using
+        dock: 'bottom',
+        displayInfo: true
+    }],
+    showModal: function() {
+    	popupWindow.show();
+    }
+});
+
+var popupWindow = Ext.create('Ext.window.Window', {
+    title: 'Send Mail',
+    height: 200,
+    width: 350,
+    bodyPadding: 10,
+    closeAction: 'hide',
+    items: [
+    	{
+            xtype: 'fieldcontainer',
+            defaultType: 'textfield',
+            items: [
+        		{
+                    name: 'sendTo',
+                    fieldLabel: 'To',
+                    width: 310
+                },{
+                    name: 'subject',
+                    fieldLabel: 'Subject',
+                    width: 310
+                },{
+					xtype: 'textareafield',
+					width: 310,
+					grow: true,
+					name: 'message',
+					fieldLabel: 'Message',
+					anchor: '100%'
+				},{
+					xtype: 'button',
+					name: 'cancelBtn',
+					text: 'Cancel',
+					listeners: {
+						'click': function() {
+							popupWindow.hide();
+						}
+					}
+				},{
+					xtype: 'button',
+					name: 'senchBtn',
+					text: 'Send',
+					listeners: {
+						'click': function() {
+							popupWindow.hide();
+						}
+					}
+				}
+            ]
+    	}
+    ]
 });
