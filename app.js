@@ -80,10 +80,15 @@ var menuBar = Ext.create('Ext.container.Container', {
 					text: 'About Us',
 				},
 				{
-			        text: 'Contacts'
+			        text: 'Contacts',
+                    listeners: {
+                        'click': function() {
+                            window.location.assign('contacts.html');
+                        }
+                    }
 				},
 				{
-					text: 'Logout'
+					text: 'Logout',
 			    }
 		    ]
 		}
@@ -165,6 +170,7 @@ var userInfo2 = Ext.create('Ext.container.Container', {
 			xtype: 'combobox',
 			fieldLabel: 'Designation',
 			id: 'dsgnCombo',
+            margin: '0 0 0 6',
 			editable: false,
 			forceSelection: true,
 			displayField: 'name'
