@@ -413,6 +413,7 @@ var grid = Ext.create('Ext.grid.Panel', {
             dataIndex: 'email',
             hidden: false,
             renderer: function(value) {
+                console.log(value)
                 return Ext.String.format('<a href="#" onclick="grid.showModal()">{1}</a>', value, value);
             }
         },
@@ -451,7 +452,7 @@ var popupWindow = Ext.create('Ext.window.Window', {
     height: 200,
     width: 350,
     bodyPadding: 10,
-    closeAction: 'hide',
+    closeAction: 'destory',
     items: [
     	{
             xtype: 'fieldcontainer',
@@ -478,7 +479,7 @@ var popupWindow = Ext.create('Ext.window.Window', {
 					text: 'Cancel',
 					listeners: {
 						'click': function() {
-							popupWindow.hide();
+							popupWindow.close();
 						}
 					}
 				},{
@@ -487,11 +488,16 @@ var popupWindow = Ext.create('Ext.window.Window', {
 					text: 'Send',
 					listeners: {
 						'click': function() {
-							popupWindow.hide();
+							popupWindow.close();
 						}
 					}
 				}
             ]
     	}
-    ]
+    ],
+    listeners: {
+        'show': function(w) {
+            console.log("Showing window...", w);
+        }
+    }
 });

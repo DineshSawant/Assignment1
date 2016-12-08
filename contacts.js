@@ -71,6 +71,35 @@ var DynamicTreeComp = (function() {
 				height: 200,
 				width: 400
 			});
+		},
+		createTabel: function() {
+			return Ext.create('Ext.panel.Panel', {
+				renderTo: 'contacts',
+				title: 'Test Panel',
+				height: 200,
+				width: 400,
+				// defaults: {
+			 //        // applied to each contained panel
+			 //        bodyStyle: 'padding:50px'
+			 //    },
+				layout: {
+					type: 'table',
+					columns: 2,
+					tdAttrs: {
+			            style: {
+			               border: '1px solid green'
+			            }
+			        }
+				},
+				items: [
+					{ xtype: 'checkbox', padding: 10 },
+					{ xtype: 'displayfield', value: 'abc', padding: 10 },
+					{ xtype: 'checkbox', padding: 10 },
+					{ xtype: 'displayfield', value: 'abc', padding: 10 },
+					{ xtype: 'checkbox', padding: 10 },
+					{ xtype: 'displayfield', value: 'abc', padding: 10 }
+				]
+			});
 		}
 	};
 
@@ -81,6 +110,10 @@ var DynamicTreeComp = (function() {
 			console.log('Creating DynamicTreeComp...');
 			var tree = _private.createTree();
 			return tree;
+		},
+		createTabel: function() {
+			var tabel = _private.createTabel();
+			return tabel;
 		}
 	}
 
@@ -92,7 +125,7 @@ Ext.application({
 	name: 'Tree',
 	launch: function() {
 		var tree = new DynamicTreeComp();
-
 		tree.create();
+		tree.createTabel();
 	}
 });
