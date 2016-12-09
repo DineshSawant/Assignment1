@@ -144,11 +144,23 @@ var userStore = Ext.create('Ext.data.Store', {
     pageSize: 3,
     proxy: {
         type: 'ajax',
-        url: 'data/users.json',
+        url: 'http://localhost:8081/',
         reader: {
             type: 'json',
             root: 'users',
             totalProperty: 'total'
+        }
+    },
+    listeners: {
+        'datachanged': function() {
+            userStore.data.items.forEach(function(ele) {
+                if(grid.selectedIDs.indexOf(ele.data.id) >=0) {
+                    ele.data.selected = true;
+                }else {
+                    ele.data.selected = false;
+                }
+                return ele;
+            });
         }
     }
 });
@@ -206,7 +218,12 @@ var menuBar = Ext.create('Ext.container.Container', {
 		    floating: false,
 		    items: [
 				{	
-					text: 'Home'
+					text: 'Home',
+                    listeners: {
+                        'click': function() {
+                            window.location.assign('/');
+                        }
+                    }
 				},
 				{
 					text: 'About Us',
@@ -319,7 +336,7 @@ var userInfo2 = Ext.create('Ext.container.Container', {
 				click: function() {
 					var form = this.up('form').getForm();
 			        if (form.isValid()) {
-			        	userStore.proxy.url = 'data/users.json?'+form.getValues(true);
+			        	userStore.proxy.url = 'http://localhost:8081/users?'+form.getValues(true);
 			            userStore.load();
 			        } else {
                         Ext.Msg.alert('Invalid Data', 'Please correct form errors.');
@@ -392,6 +409,7 @@ var grid = Ext.create('Ext.grid.Panel', {
 	height: 410,
 	title: 'Search Result',
 	region: 'south',
+    selectedIDs: [],
 	columns: [
         {
             text: 'First Name',
@@ -413,7 +431,6 @@ var grid = Ext.create('Ext.grid.Panel', {
             dataIndex: 'email',
             hidden: false,
             renderer: function(value) {
-                console.log(value)
                 return Ext.String.format('<a href="#" onclick="grid.showModal()">{1}</a>', value, value);
             }
         },
@@ -433,7 +450,24 @@ var grid = Ext.create('Ext.grid.Panel', {
             flex: 1,
             xtype: 'checkcolumn',
             sortable: false,
-            dataIndex: 'selected'
+            dataIndex: 'selected',
+            listeners: {
+                'checkchange': function(node, checked, eOpts) {
+                    var selectedObj = userStore.data.items[checked].data;
+                    if(selectedObj.selected) {
+                        grid.selectedIDs.push(selectedObj.id);
+                    }else {
+                        if(grid.selectedIDs.indexOf(selectedObj.id) >=0) {
+                            grid.selectedIDs.splice(grid.selectedIDs.indexOf(selectedObj.id), 1);
+                        }
+                    }
+                },
+                'checkallchange': function(node, checked, eOpts) {
+                    userStore.data.items.forEach(function(ele) {
+                        grid.selectedIDs.push(ele.data.id);
+                    });
+                }
+            }
         }
     ],
     dockedItems: [{

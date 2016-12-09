@@ -78,10 +78,6 @@ var DynamicTreeComp = (function() {
 				title: 'Test Panel',
 				height: 200,
 				width: 400,
-				// defaults: {
-			 //        // applied to each contained panel
-			 //        bodyStyle: 'padding:50px'
-			 //    },
 				layout: {
 					type: 'table',
 					columns: 2,
@@ -93,11 +89,11 @@ var DynamicTreeComp = (function() {
 				},
 				items: [
 					{ xtype: 'checkbox', padding: 10 },
-					{ xtype: 'displayfield', value: 'abc', padding: 10 },
+					{ xtype: 'displayfield', value: 'Test Fiels One', padding: 10 },
 					{ xtype: 'checkbox', padding: 10 },
-					{ xtype: 'displayfield', value: 'abc', padding: 10 },
+					{ xtype: 'displayfield', value: 'Test Fiels Two', padding: 10 },
 					{ xtype: 'checkbox', padding: 10 },
-					{ xtype: 'displayfield', value: 'abc', padding: 10 }
+					{ xtype: 'displayfield', value: 'Test Fiels Three', padding: 10 }
 				]
 			});
 		}

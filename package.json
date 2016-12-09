@@ -1,0 +1,23 @@
+{
+  "name": "extjsapp",
+  "version": "1.0.0",
+  "description": "Ext js application with node server",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DineshSawant/Assignment1.git"
+  },
+  "author": "Dinesh Sawant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DineshSawant/Assignment1/issues"
+  },
+  "homepage": "https://github.com/DineshSawant/Assignment1#readme",
+  "devDependencies": {
+    "express": "^4.14.0"
+  }
+}
