@@ -154,7 +154,7 @@ var userStore = Ext.create('Ext.data.Store', {
     listeners: {
         'datachanged': function() {
             userStore.data.items.forEach(function(ele) {
-                if(grid.selectedIDs.indexOf(ele.data.id) >=0) {
+                if(grid.selectedIDs.indexOf(ele.data.id) > -1) {
                     ele.data.selected = true;
                 }else {
                     ele.data.selected = false;
@@ -334,6 +334,7 @@ var userInfo2 = Ext.create('Ext.container.Container', {
 			// height: 30,
 			listeners: {
 				click: function() {
+                    grid.selectedIDs = [];
 					var form = this.up('form').getForm();
 			        if (form.isValid()) {
 			        	userStore.proxy.url = 'http://localhost:8081/users?'+form.getValues(true);
@@ -457,7 +458,7 @@ var grid = Ext.create('Ext.grid.Panel', {
                     if(selectedObj.selected) {
                         grid.selectedIDs.push(selectedObj.id);
                     }else {
-                        if(grid.selectedIDs.indexOf(selectedObj.id) >=0) {
+                        if(grid.selectedIDs.indexOf(selectedObj.id) > -1) {
                             grid.selectedIDs.splice(grid.selectedIDs.indexOf(selectedObj.id), 1);
                         }
                     }
